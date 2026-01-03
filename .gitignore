@@ -43,6 +43,10 @@ Thumbs.db
 # Model files (can be regenerated)
 models/*.joblib
 
+# UI and other non-core folders
+UI/
+changes/
+
 # Keep directory structure but ignore contents
 !models/.gitkeep
 
