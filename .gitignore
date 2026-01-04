@@ -44,8 +44,12 @@ Thumbs.db
 models/*.joblib
 
 # UI and other non-core folders
-UI/
 changes/
+
+# UI folder is now tracked, but exclude:
+UI/**/__pycache__/
+UI/**/*.pyc
+UI/**/config.js  # Deployment config (may contain URLs)
 
 # Keep directory structure but ignore contents
 !models/.gitkeep

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wildfire Readiness Assistant</title>
+  <meta name="theme-color" content="#1F2937" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <div class="logo">🔥</div>
+      <div>
+        <div class="title">Wildfire Readiness Assistant</div>
+        <div class="subtitle">Readiness guidance based on historical fire patterns + weather</div>
+      </div>
+    </div>
+    <button class="ethics-btn" id="btnEthics">Disclaimer</button>
+  </div>
+</header>
+
+
+    <main class="wrap">
+      <div id="view" class="view"></div>
+    </main>
+
+    <nav class="nav">
+      <div class="wrap navwrap">
+        
+      <button class="navbtn" data-route="home">Home</button>
+      <button class="navbtn" data-route="location">Location</button>
+      <button class="navbtn" data-route="summary">Summary</button>
+      <button class="navbtn" data-route="actions">Actions</button>
+    
+      </div>
+    </nav>
+  </div>
+
+    <!-- Disclaimer modal -->
+  <div id="ethicsModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-backdrop" data-close="1"></div>
+    <div class="modal-card" role="document" aria-label="Disclaimer">
+      <div class="modal-head">
+        <div class="modal-title">Disclaimer</div>
+        <button class="iconbtn" id="closeEthics" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <p><b>Readiness advisory</b> only. This tool supports situational awareness and preparedness.</p>
+        <h4>Limits of generalization</h4>
+        <ul>
+          <li>Validated only for tiles/regions you explicitly analyze (pilot first).</li>
+          <li>Outside those regions/seasons, outputs may be misleading without retraining or recalibration.</li>
+        </ul>
+        <h4>What this tool is NOT</h4>
+        <ul>
+          <li>Not an evacuation-order generator.</li>
+          <li>Not a replacement for CAL FIRE/NWS/county emergency alerts.</li>
+        </ul>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="ackEthics">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Optional config.js for deployment (copy config.js.example to config.js and update API_URL) -->
+  <script src="config.js" onerror="console.log('config.js not found, using default API URL')"></script>
+  <script src="app.js?v=3"></script>
+</body>
+</html>

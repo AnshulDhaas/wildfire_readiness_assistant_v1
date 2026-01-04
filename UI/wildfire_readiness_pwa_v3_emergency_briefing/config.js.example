@@ -1,0 +1,7 @@
+// Configuration file for API endpoint
+// Copy this to config.js and update with your deployed backend URL
+
+const CONFIG = {
+  API_URL: "http://localhost:5000"  // Change to your deployed backend URL (e.g., "https://your-app.railway.app")
+};
+
