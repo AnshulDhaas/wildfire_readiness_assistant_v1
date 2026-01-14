@@ -1,7 +1,7 @@
 """
 Flask API Server for Wildfire Readiness Predictions
 ====================================================
-Serves predictions to the UI frontend.
+Serves predictions to the UI frontend and static files.
 
 Usage:
     python api_server.py
@@ -9,14 +9,18 @@ Usage:
 Then the UI will call: http://localhost:5000/predict
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 import joblib
 import numpy as np
 from pathlib import Path
 import sys
+import os
 
-app = Flask(__name__)
+# Determine the directory where api_server.py is located
+STATIC_DIR = Path(__file__).parent
+
+app = Flask(__name__, static_folder=str(STATIC_DIR), static_url_path='')
 CORS(app)  # Enable CORS for frontend
 
 # Load model (check multiple locations for deployment flexibility)
@@ -442,6 +446,26 @@ def get_tiles():
         ],
         "note": "Predictions require calling /predict endpoint with actual weather and distance features"
     })
+
+
+# =====================================================
+# Static file serving for frontend (Render deployment)
+# =====================================================
+
+@app.route('/')
+def serve_index():
+    """Serve the main index.html file."""
+    return send_from_directory(str(STATIC_DIR), 'index.html')
+
+
+@app.route('/<path:filename>')
+def serve_static(filename):
+    """Serve static files (JS, CSS, etc.)."""
+    file_path = STATIC_DIR / filename
+    if file_path.exists() and file_path.is_file():
+        return send_from_directory(str(STATIC_DIR), filename)
+    # Return 404 for non-existent files
+    return jsonify({"error": "File not found"}), 404
 
 
 if __name__ == '__main__':

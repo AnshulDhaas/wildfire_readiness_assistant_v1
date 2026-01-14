@@ -58,9 +58,9 @@ function clamp01(x){ return Math.max(0, Math.min(1, x)); }
 
 // 3-level UI mapping (matches your earlier mock)
 function uiReadinessFromProb(p){
-  if (p < 0.35) return { label: "Low readiness", cls: "low", emoji: "✅" };
-  if (p < 0.75) return { label: "Moderate readiness", cls: "mod", emoji: "⚠️" };
-  return { label: "High readiness", cls: "high", emoji: "❗" };
+  if (p < 0.35) return { label: "Low", cls: "low", emoji: "🟢", subtitle: "Go about your day" };
+  if (p < 0.75) return { label: "Moderate", cls: "mod", emoji: "🟡", subtitle: "Pack a go-bag, review your route" };
+  return { label: "High", cls: "high", emoji: "🔴", subtitle: "Be ready to leave if advised" };
 }
 
 function confidenceLabel(p){
@@ -279,6 +279,7 @@ function renderSummary(){
         <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
           <div>
             <div class="badge ${r.cls}">${r.emoji} ${r.label}</div>
+            <div class="readiness-subtitle" style="font-size:15px; font-weight:600; margin-top:6px; color:rgba(255,255,255,.92);">${r.subtitle}</div>
             <div style="font-size:40px; font-weight:900; margin-top:6px; letter-spacing:-0.8px;">${p.toFixed(3)}</div>
             <div class="small" style="color:rgba(255,255,255,.85); margin-top:2px;">Probability of elevated readiness</div>
           </div>
@@ -348,6 +349,7 @@ function renderActions(){
     <p class="p">Practical steps based on readiness level. This tool does not issue evacuation orders.</p>
     <div class="readinessCard ${r.cls}">
       <div class="badge ${r.cls}">${r.emoji} ${r.label}</div>
+      <div class="readiness-subtitle" style="font-size:15px; font-weight:600; margin-top:6px; color:rgba(255,255,255,.92);">${r.subtitle}</div>
       <div style="margin-top:10px;">${body}</div>
     </div>
     <div class="hr"></div>
