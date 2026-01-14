@@ -206,9 +206,9 @@ function renderLocation(){
     </div>
     
     <div class="small" style="margin-top:8px;">
-      <strong>High:</strong> Distance 25km, Wind 22 km/h, EVAP 6mm, PRCP 0mm, Temp 35°C<br/>
-      <strong>Moderate:</strong> Distance 60km, Wind 15 km/h, EVAP 4mm, PRCP 0mm, Temp 28°C<br/>
-      <strong>Low:</strong> Distance 200km, Wind 8 km/h, EVAP 2mm, PRCP 3mm, Temp 20°C
+      <strong>High:</strong> Distance 8km, Wind 22 km/h, EVAP 5mm, PRCP 0mm, Temp 34°C<br/>
+      <strong>Moderate:</strong> Distance 45km, Wind 12 km/h, EVAP 3.5mm, PRCP 0mm, Temp 26°C<br/>
+      <strong>Low:</strong> Distance 800km, Wind 8 km/h, EVAP 2mm, PRCP 4mm, Temp 20°C
     </div>
 
     <div class="hr"></div>
@@ -543,33 +543,35 @@ function render(){
     });
     document.getElementById("useGeo")?.addEventListener("click", useGeolocation);
     
-    // Test scenario buttons
+    // High Risk — very close + bad weather
     document.getElementById("testHigh")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 25.0,
-        AWND: 22.0,
-        EVAP: 6.0,
-        PRCP: 0.0,
-        TMAX: 35.0
+        DISTANCE_TO_FIRE_KM: 8.0,    // Under 10km threshold
+        AWND: 22.0,                   // High wind
+        EVAP: 5.0,                    // Dry
+        PRCP: 0.0,                    // No rain
+        TMAX: 34.0
       }, "High Risk Test Scenario");
     });
-    
+
+    // Moderate Risk — close but not critical
     document.getElementById("testModerate")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 60.0,
-        AWND: 15.0,
-        EVAP: 4.0,
+        DISTANCE_TO_FIRE_KM: 45.0,   // Under 50km but not extreme
+        AWND: 12.0,                   // Moderate wind
+        EVAP: 3.5,
         PRCP: 0.0,
-        TMAX: 28.0
+        TMAX: 26.0
       }, "Moderate Risk Test Scenario");
     });
-    
+
+    // Low Risk — far away + favorable conditions
     document.getElementById("testLow")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 200.0,
-        AWND: 8.0,
-        EVAP: 2.0,
-        PRCP: 3.0,
+        DISTANCE_TO_FIRE_KM: 800.0,  // Well beyond 50km
+        AWND: 8.0,                    // Calm
+        EVAP: 2.0,                    // Not dry
+        PRCP: 4.0,                    // Some rain
         TMAX: 20.0
       }, "Low Risk Test Scenario");
     });
