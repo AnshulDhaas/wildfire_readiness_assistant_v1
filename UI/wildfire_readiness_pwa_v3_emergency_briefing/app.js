@@ -56,10 +56,10 @@ function initDOMElements() {
 
 function clamp01(x){ return Math.max(0, Math.min(1, x)); }
 
-// 3-level UI mapping (matches your earlier mock)
+// 3-level UI mapping (thresholds calibrated for Logistic Regression model)
 function uiReadinessFromProb(p){
-  if (p < 0.35) return { label: "Low", cls: "low", emoji: "🟢", subtitle: "Go about your day" };
-  if (p < 0.75) return { label: "Moderate", cls: "mod", emoji: "🟡", subtitle: "Pack a go-bag, review your route" };
+  if (p < 0.30) return { label: "Low", cls: "low", emoji: "🟢", subtitle: "Go about your day" };
+  if (p < 0.55) return { label: "Moderate", cls: "mod", emoji: "🟡", subtitle: "Pack a go-bag, review your route" };
   return { label: "High", cls: "high", emoji: "🔴", subtitle: "Be ready to leave if advised" };
 }
 
@@ -291,7 +291,7 @@ function renderSummary(){
 
         <div style="margin-top:12px;">${bar}</div>
         <div class="small" style="color:rgba(255,255,255,.85); margin-top:8px;">
-          Low &lt; 0.35 • Moderate 0.35–0.75 • High ≥ 0.75
+          Low &lt; 0.30 • Moderate 0.30–0.55 • High ≥ 0.55
         </div>
 
         <div class="hr" style="margin:16px 0; border-color:rgba(255,255,255,.2);"></div>
