@@ -26,11 +26,11 @@ CORS(app)  # Enable CORS for frontend
 # Load model (check multiple locations for deployment flexibility)
 SCRIPT_DIR = Path(__file__).parent
 
-# Try multiple possible model locations
+# Try multiple possible model locations (using Logistic Regression for stability)
 POSSIBLE_PATHS = [
-    SCRIPT_DIR / "models" / "wildfire_readiness_rf_model.joblib",  # Local models/ folder
-    SCRIPT_DIR.parent.parent / "models" / "wildfire_readiness_rf_model.joblib",  # Project root models/
-    Path("models") / "wildfire_readiness_rf_model.joblib",  # Current directory models/
+    SCRIPT_DIR / "models" / "wildfire_readiness_lr_model.joblib",  # Local models/ folder
+    SCRIPT_DIR.parent.parent / "models" / "wildfire_readiness_lr_model.joblib",  # Project root models/
+    Path("models") / "wildfire_readiness_lr_model.joblib",  # Current directory models/
 ]
 
 MODEL_PATH = None
