@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wildfire Readiness Assistant - System Diagram</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #f8fafc;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #1e293b;
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #475569;
+    }
+    .legend-box {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      color: #64748b;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 Wildfire Readiness Assistant - System Architecture</h1>
+    <p class="subtitle">Data flow from sources to user-facing readiness guidance</p>
+    
+    <svg viewBox="0 0 1100 700" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background sections -->
+      <!-- Data Sources Section -->
+      <rect x="20" y="60" width="240" height="280" rx="12" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+      <text x="140" y="90" text-anchor="middle" font-weight="bold" font-size="14" fill="#1e40af">DATA SOURCES</text>
+      
+      <!-- AI/ML Section -->
+      <rect x="300" y="60" width="260" height="280" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+      <text x="430" y="90" text-anchor="middle" font-weight="bold" font-size="14" fill="#92400e">AI/ML PIPELINE</text>
+      
+      <!-- Decision Logic Section -->
+      <rect x="600" y="60" width="220" height="280" rx="12" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+      <text x="710" y="90" text-anchor="middle" font-weight="bold" font-size="14" fill="#065f46">DECISION LOGIC</text>
+      
+      <!-- UI Section -->
+      <rect x="860" y="60" width="220" height="280" rx="12" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2"/>
+      <text x="970" y="90" text-anchor="middle" font-weight="bold" font-size="14" fill="#5b21b6">USER INTERFACE</text>
+      
+      <!-- HUMAN/OFFICIAL BOUNDARY -->
+      <rect x="20" y="400" width="1060" height="280" rx="12" fill="#fef2f2" stroke="#ef4444" stroke-width="3" stroke-dasharray="8,4"/>
+      <text x="550" y="430" text-anchor="middle" font-weight="bold" font-size="14" fill="#b91c1c">⚠️ HUMAN DECISION + OFFICIAL AUTHORITY BOUNDARY</text>
+      
+      <!-- Data Source Boxes -->
+      <!-- Open-Meteo -->
+      <rect x="40" y="110" width="200" height="70" rx="8" fill="white" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="140" y="135" text-anchor="middle" font-weight="600" font-size="12" fill="#1e40af">🌤️ Open-Meteo API</text>
+      <text x="140" y="152" text-anchor="middle" font-size="10" fill="#64748b">Historical Weather Archive</text>
+      <text x="140" y="168" text-anchor="middle" font-size="9" fill="#94a3b8">TMAX, AWND, PRCP, EVAP</text>
+      
+      <!-- CAL FIRE -->
+      <rect x="40" y="190" width="200" height="70" rx="8" fill="white" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="140" y="215" text-anchor="middle" font-weight="600" font-size="12" fill="#1e40af">🔥 CAL FIRE FRAP</text>
+      <text x="140" y="232" text-anchor="middle" font-size="10" fill="#64748b">Fire Perimeter Polygons</text>
+      <text x="140" y="248" text-anchor="middle" font-size="9" fill="#94a3b8">GeoJSON (2022 Season)</text>
+      
+      <!-- User Location -->
+      <rect x="40" y="270" width="200" height="55" rx="8" fill="white" stroke="#3b82f6" stroke-width="1.5"/>
+      <text x="140" y="295" text-anchor="middle" font-weight="600" font-size="12" fill="#1e40af">📍 User Location</text>
+      <text x="140" y="312" text-anchor="middle" font-size="10" fill="#64748b">ZIP Code → Coordinates</text>
+      
+      <!-- AI/ML Boxes -->
+      <!-- Feature Engineering -->
+      <rect x="320" y="110" width="220" height="60" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="430" y="135" text-anchor="middle" font-weight="600" font-size="12" fill="#92400e">⚙️ Feature Engineering</text>
+      <text x="430" y="152" text-anchor="middle" font-size="9" fill="#64748b">Distance calculation (EPSG:3310)</text>
+      <text x="430" y="165" text-anchor="middle" font-size="9" fill="#64748b">Weather normalization</text>
+      
+      <!-- Model -->
+      <rect x="320" y="180" width="220" height="80" rx="8" fill="#fef9c3" stroke="#f59e0b" stroke-width="2"/>
+      <text x="430" y="205" text-anchor="middle" font-weight="bold" font-size="13" fill="#92400e">🤖 Logistic Regression</text>
+      <text x="430" y="222" text-anchor="middle" font-size="10" fill="#78350f">StandardScaler + Pipeline</text>
+      <text x="430" y="238" text-anchor="middle" font-size="9" fill="#a16207">Trained on CA 2022 data</text>
+      <text x="430" y="252" text-anchor="middle" font-size="9" fill="#a16207">94.1% recall on elevated risk</text>
+      
+      <!-- Output -->
+      <rect x="320" y="270" width="220" height="55" rx="8" fill="white" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="430" y="292" text-anchor="middle" font-weight="600" font-size="12" fill="#92400e">📊 Probability Output</text>
+      <text x="430" y="310" text-anchor="middle" font-size="10" fill="#64748b">p_elevated ∈ [0, 1]</text>
+      
+      <!-- Decision Logic Boxes -->
+      <!-- Thresholds -->
+      <rect x="620" y="110" width="180" height="100" rx="8" fill="white" stroke="#10b981" stroke-width="1.5"/>
+      <text x="710" y="132" text-anchor="middle" font-weight="600" font-size="12" fill="#065f46">📏 Probability Thresholds</text>
+      <text x="710" y="155" text-anchor="middle" font-size="11" fill="#047857">🟢 Low: p &lt; 0.25</text>
+      <text x="710" y="175" text-anchor="middle" font-size="11" fill="#d97706">🟡 Moderate: 0.25–0.45</text>
+      <text x="710" y="195" text-anchor="middle" font-size="11" fill="#dc2626">🔴 High: p ≥ 0.45</text>
+      
+      <!-- Risk Labels -->
+      <rect x="620" y="220" width="180" height="105" rx="8" fill="white" stroke="#10b981" stroke-width="1.5"/>
+      <text x="710" y="242" text-anchor="middle" font-weight="600" font-size="12" fill="#065f46">🏷️ Readiness Levels</text>
+      <text x="710" y="262" text-anchor="middle" font-size="9" fill="#22c55e">"Go about your day"</text>
+      <text x="710" y="282" text-anchor="middle" font-size="9" fill="#f59e0b">"Pack go-bag, review route"</text>
+      <text x="710" y="302" text-anchor="middle" font-size="9" fill="#ef4444">"Be ready to leave if advised"</text>
+      
+      <!-- UI Boxes -->
+      <!-- PWA -->
+      <rect x="880" y="110" width="180" height="70" rx="8" fill="white" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="970" y="135" text-anchor="middle" font-weight="600" font-size="12" fill="#5b21b6">📱 Progressive Web App</text>
+      <text x="970" y="152" text-anchor="middle" font-size="10" fill="#64748b">Flask + Static Frontend</text>
+      <text x="970" y="168" text-anchor="middle" font-size="9" fill="#94a3b8">Deployed on Render</text>
+      
+      <!-- Display -->
+      <rect x="880" y="190" width="180" height="70" rx="8" fill="white" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="970" y="215" text-anchor="middle" font-weight="600" font-size="12" fill="#5b21b6">🖥️ User Display</text>
+      <text x="970" y="232" text-anchor="middle" font-size="10" fill="#64748b">Risk level + Probability</text>
+      <text x="970" y="248" text-anchor="middle" font-size="9" fill="#94a3b8">Why explanations, Actions</text>
+      
+      <!-- Actions -->
+      <rect x="880" y="270" width="180" height="55" rx="8" fill="white" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="970" y="292" text-anchor="middle" font-weight="600" font-size="12" fill="#5b21b6">✅ Action Checklist</text>
+      <text x="970" y="310" text-anchor="middle" font-size="10" fill="#64748b">Tailored to readiness level</text>
+      
+      <!-- Human Boundary Content -->
+      <!-- Human -->
+      <rect x="60" y="460" width="300" height="100" rx="8" fill="white" stroke="#ef4444" stroke-width="1.5"/>
+      <text x="210" y="490" text-anchor="middle" font-weight="bold" font-size="14" fill="#b91c1c">👤 HUMAN DECISION MAKER</text>
+      <text x="210" y="512" text-anchor="middle" font-size="11" fill="#64748b">• Reviews readiness guidance</text>
+      <text x="210" y="530" text-anchor="middle" font-size="11" fill="#64748b">• Makes personal preparedness decisions</text>
+      <text x="210" y="548" text-anchor="middle" font-size="11" fill="#64748b">• Responsible for own safety actions</text>
+      
+      <!-- Official -->
+      <rect x="420" y="460" width="320" height="100" rx="8" fill="white" stroke="#ef4444" stroke-width="1.5"/>
+      <text x="580" y="490" text-anchor="middle" font-weight="bold" font-size="14" fill="#b91c1c">🏛️ OFFICIAL AUTHORITIES</text>
+      <text x="580" y="512" text-anchor="middle" font-size="11" fill="#64748b">• CAL FIRE: Fire status & warnings</text>
+      <text x="580" y="530" text-anchor="middle" font-size="11" fill="#64748b">• County Emergency: Evacuation orders</text>
+      <text x="580" y="548" text-anchor="middle" font-size="11" fill="#64748b">• NWS: Red Flag warnings</text>
+      
+      <!-- Not Replaced -->
+      <rect x="800" y="460" width="260" height="100" rx="8" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+      <text x="930" y="490" text-anchor="middle" font-weight="bold" font-size="13" fill="#991b1b">🚫 THIS TOOL DOES NOT:</text>
+      <text x="930" y="512" text-anchor="middle" font-size="10" fill="#7f1d1d">• Issue evacuation orders</text>
+      <text x="930" y="530" text-anchor="middle" font-size="10" fill="#7f1d1d">• Replace official alerts</text>
+      <text x="930" y="548" text-anchor="middle" font-size="10" fill="#7f1d1d">• Provide real-time prediction</text>
+      
+      <!-- Key message -->
+      <rect x="200" y="580" width="680" height="50" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+      <text x="540" y="605" text-anchor="middle" font-weight="bold" font-size="12" fill="#991b1b">⚠️ READINESS ADVISORY ONLY — Always follow official emergency directives from CAL FIRE and local authorities</text>
+      <text x="540" y="622" text-anchor="middle" font-size="10" fill="#7f1d1d">Model validated for California 2022 fire season only. Outside this scope, outputs may be unreliable.</text>
+      
+      <!-- ARROWS -->
+      <!-- Data to AI -->
+      <path d="M240 145 L310 145" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrowBlue)"/>
+      <path d="M240 225 L310 210" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrowBlue)"/>
+      <path d="M240 297 L310 270" stroke="#3b82f6" stroke-width="2" fill="none" marker-end="url(#arrowBlue)"/>
+      
+      <!-- AI internal -->
+      <path d="M430 170 L430 180" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrowYellow)"/>
+      <path d="M430 260 L430 270" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrowYellow)"/>
+      
+      <!-- AI to Decision -->
+      <path d="M540 297 L610 200" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arrowYellow)"/>
+      
+      <!-- Decision to UI -->
+      <path d="M800 160 L870 160" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+      <path d="M800 270 L870 230" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrowGreen)"/>
+      
+      <!-- UI to Human -->
+      <path d="M970 340 L970 380 L210 380 L210 450" stroke="#8b5cf6" stroke-width="2" fill="none" marker-end="url(#arrowPurple)" stroke-dasharray="5,3"/>
+      
+      <!-- Arrow markers -->
+      <defs>
+        <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#3b82f6"/>
+        </marker>
+        <marker id="arrowYellow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#f59e0b"/>
+        </marker>
+        <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#10b981"/>
+        </marker>
+        <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#8b5cf6"/>
+        </marker>
+      </defs>
+      
+      <!-- Section labels on arrows -->
+      <text x="275" y="135" font-size="8" fill="#3b82f6">Weather</text>
+      <text x="275" y="200" font-size="8" fill="#3b82f6">Perimeters</text>
+      <text x="275" y="280" font-size="8" fill="#3b82f6">Location</text>
+      <text x="575" y="240" font-size="8" fill="#f59e0b">p_elevated</text>
+      <text x="835" y="150" font-size="8" fill="#10b981">Level</text>
+      <text x="600" y="372" font-size="9" fill="#8b5cf6">Guidance</text>
+    </svg>
+    
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-box" style="background: #dbeafe; border: 2px solid #3b82f6;"></div>
+        <span>Data Sources</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: #fef3c7; border: 2px solid #f59e0b;"></div>
+        <span>AI/ML Pipeline</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: #d1fae5; border: 2px solid #10b981;"></div>
+        <span>Decision Logic</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: #ede9fe; border: 2px solid #8b5cf6;"></div>
+        <span>User Interface</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-box" style="background: #fef2f2; border: 2px dashed #ef4444;"></div>
+        <span>Human/Official Boundary</span>
+      </div>
+    </div>
+    
+    <div class="footer">
+      Wildfire Readiness Assistant v1.0 | Logistic Regression Model | California 2022 Fire Season<br>
+      Created for situational awareness and preparedness guidance only
+    </div>
+  </div>
+</body>
+</html>
