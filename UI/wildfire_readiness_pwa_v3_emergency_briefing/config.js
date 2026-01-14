@@ -5,5 +5,5 @@
 const CONFIG = {
   // Empty string = same origin (for Render deployment where frontend + backend are same server)
   // Set to "http://localhost:5000" for local development if needed
-  API_URL: ""
+  API_URL: "https://lr-api-server.onrender.com/"
 };
