@@ -206,9 +206,9 @@ function renderLocation(){
     </div>
     
     <div class="small" style="margin-top:8px;">
-      <strong>High:</strong> Distance 5km, Wind 35 km/h, EVAP 7mm, PRCP 0mm, Temp 37.8°C<br/>
-      <strong>Moderate:</strong> Distance 40km, Wind 18 km/h, EVAP 4mm, PRCP 0mm, Temp 29.4°C<br/>
-      <strong>Low:</strong> Distance 150km, Wind 10 km/h, EVAP 2mm, PRCP 5mm, Temp 18.3°C
+      <strong>High:</strong> Distance 25km, Wind 22 km/h, EVAP 6mm, PRCP 0mm, Temp 35°C<br/>
+      <strong>Moderate:</strong> Distance 60km, Wind 15 km/h, EVAP 4mm, PRCP 0mm, Temp 28°C<br/>
+      <strong>Low:</strong> Distance 200km, Wind 8 km/h, EVAP 2mm, PRCP 3mm, Temp 20°C
     </div>
 
     <div class="hr"></div>
@@ -546,31 +546,31 @@ function render(){
     // Test scenario buttons
     document.getElementById("testHigh")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 5.0,
-        AWND: 35.0,
-        EVAP: 7.0,
+        DISTANCE_TO_FIRE_KM: 25.0,
+        AWND: 22.0,
+        EVAP: 6.0,
         PRCP: 0.0,
-        TMAX: 37.8
+        TMAX: 35.0
       }, "High Risk Test Scenario");
     });
     
     document.getElementById("testModerate")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 40.0,
-        AWND: 18.0,
+        DISTANCE_TO_FIRE_KM: 60.0,
+        AWND: 15.0,
         EVAP: 4.0,
         PRCP: 0.0,
-        TMAX: 29.4
+        TMAX: 28.0
       }, "Moderate Risk Test Scenario");
     });
     
     document.getElementById("testLow")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 150.0,
-        AWND: 10.0,
+        DISTANCE_TO_FIRE_KM: 200.0,
+        AWND: 8.0,
         EVAP: 2.0,
-        PRCP: 5.0,
-        TMAX: 18.3
+        PRCP: 3.0,
+        TMAX: 20.0
       }, "Low Risk Test Scenario");
     });
     
