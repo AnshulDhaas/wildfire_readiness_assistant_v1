@@ -207,7 +207,7 @@ function renderLocation(){
     
     <div class="small" style="margin-top:8px;">
       <strong>High:</strong> Distance 8km, Wind 22 km/h, EVAP 5mm, PRCP 0mm, Temp 34°C<br/>
-      <strong>Moderate:</strong> Distance 45km, Wind 12 km/h, EVAP 3.5mm, PRCP 0mm, Temp 26°C<br/>
+      <strong>Moderate:</strong> Distance 200km, Wind 11 km/h, EVAP 2.8mm, PRCP 1.5mm, Temp 24°C<br/>
       <strong>Low:</strong> Distance 800km, Wind 8 km/h, EVAP 2mm, PRCP 4mm, Temp 20°C
     </div>
 
@@ -554,14 +554,14 @@ function render(){
       }, "High Risk Test Scenario");
     });
 
-    // Moderate Risk — close but not critical
+    // Moderate Risk — mid-range conditions
     document.getElementById("testModerate")?.addEventListener("click", async () => {
       await runTestScenario({
-        DISTANCE_TO_FIRE_KM: 45.0,   // Under 50km but not extreme
-        AWND: 12.0,                   // Moderate wind
-        EVAP: 3.5,
-        PRCP: 0.0,
-        TMAX: 26.0
+        DISTANCE_TO_FIRE_KM: 200.0,   // Moderate distance
+        AWND: 11.0,                    // Light wind
+        EVAP: 2.8,                     // Some dryness
+        PRCP: 1.5,                     // Light precipitation
+        TMAX: 24.0
       }, "Moderate Risk Test Scenario");
     });
 
