@@ -2,11 +2,15 @@
 
 The Wildfire Readiness Assistant is a machine learning tool designed to help communities assess their preparedness for wildfire events. This project addresses public safety issues by providing data-driven readiness assessments that help individuals and communities understand whether conditions may require increased awareness or preparation. The tool supports informed decision-making and does not replace official emergency directions.
 
+## Why this exists?
+
+Wildfire information is often scattered across maps, forecasts, and alerts, making it hard for residents to know how prepared they should be in the critical hours before guidance becomes clear. The Wildfire Readiness Assistant synthesizes public wildfire and weather signals into a simple readiness level (Low, Moderate, High) with actionable next steps. It is advisory-only and designed to complement—not replace—official emergency alerts and evacuation orders.
+
 ## Pilot Region and Scope
 
-The implementation begins as a Santa Cruz pilot for the 2022 fire season (June 1 – October 31). Santa Cruz was selected as the pilot region because it represents a high-risk area with documented fire activity during the 2022 season, enabling structured testing of the modeling approach using historical fire and weather conditions. This focused scope supports iteration before broader geographic expansion.
+The implementation begins as a Santa Cruz pilot covering **three fire seasons (2020–2022)**, each running June 1 – October 31. Santa Cruz was selected as the pilot region because it represents a high-risk area with documented fire activity, enabling structured testing of the modeling approach using historical fire and weather conditions. The multi-year approach provides ~459 days of training data and enables cross-year validation.
 
-The model was later expanded using tiled data across California. Results and thresholds from the Santa Cruz pilot should not be assumed to generalize outside Santa Cruz without additional calibration and testing.
+The model was later expanded using tiled data across California for all three years (2020–2022). Results and thresholds from the Santa Cruz pilot should not be assumed to generalize outside California without additional calibration and testing.
 
 ## How the Model Works
 
@@ -18,7 +22,7 @@ The model is trained on combined historical fire perimeter data and daily weathe
 - Evapotranspiration (a measure of dryness)  
 - Distance to the nearest historical fire perimeter  
 
-Using a logistic regression model trained on 2022 California fire season data, the tool outputs a probability indicating whether readiness should be elevated.
+Using a logistic regression model trained on 2020–2022 California fire season data, the tool outputs a probability indicating whether readiness should be elevated.
 
 The model categorizes days into three readiness levels based on probability thresholds:
 
@@ -36,11 +40,11 @@ Accuracy and ROC‑AUC are secondary metrics: accuracy can be misleading when mo
 
 This tool is designed to support readiness and situational awareness. It does not issue evacuation orders, replace official emergency directives, or make real‑time predictions.
 
-The model has been **pilot‑tested** for the Santa Cruz region during the 2022 fire season. It has not been fully validated for other regions, time periods, or for use outside California. Users should always follow official directives from CAL FIRE, county emergency management, and the National Weather Service. This tool provides supplementary readiness guidance only.
+The model has been **pilot‑tested** for the Santa Cruz region across three fire seasons (2020–2022). It has not been fully validated for other regions or for use outside California. Users should always follow official directives from CAL FIRE, county emergency management, and the National Weather Service. This tool provides supplementary readiness guidance only.
 
 ## Statewide California Coverage
 
-The Santa Cruz pilot approach was expanded to statewide California coverage by dividing the state into tiled bounding boxes with 16 regions. Each tile is processed independently to collect fire perimeter and weather data, then combined into a unified training dataset. This tiled approach respects API rate limits, enables region‑aware evaluation, and allows for per‑tile performance assessment to identify areas where the model may need additional calibration.
+The Santa Cruz pilot approach was expanded to statewide California coverage by dividing the state into tiled bounding boxes with 16 regions, processed across all three fire seasons (2020–2022). This yields 48 tile-year combinations and approximately 7,344 daily observations. Each tile is processed independently to collect fire perimeter and weather data, then combined into a unified training dataset. This tiled approach respects API rate limits, enables region‑aware evaluation, and allows for per‑tile performance assessment to identify areas where the model may need additional calibration.
 
 ## How to Run the Notebook
 
@@ -48,5 +52,9 @@ The Santa Cruz pilot approach was expanded to statewide California coverage by d
 2. Open `readinessAssistantModel.ipynb` in Jupyter  
 3. Run all cells sequentially  
 4. The notebook will download data, train models, and generate results  
+
+## Live demo
+
+You can test out the model at: https://wilfire-readiness-assisitant-v1.onrender.com/
 
 Data is fetched programmatically from public APIs at runtime. No pre‑downloaded datasets are required.
