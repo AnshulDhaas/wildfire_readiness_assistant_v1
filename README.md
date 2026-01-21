@@ -1,118 +1,104 @@
-# 🔥 Wildfire Readiness Assistant  
-**AI-powered readiness guidance for wildfire-prone communities (Advisory-only)**
+# 🔥 Wildfire Readiness Assistant
 
-🌲 **Wildfire Readiness Assistant** is a machine learning tool designed to help **residents in wildfire-prone regions** understand **how prepared they should be right now** using a simple readiness level:
-
-🟢 **Low** → Stay informed  
-🟡 **Moderate** → Prepare (go-bag, routes, checklist)  
-🔴 **High** → Be ready to evacuate *if advised by authorities*
-
-> ⚠️ **Important:** This project is **advisory-only** and **does not replace** federal/state/local emergency alerts or evacuation orders.
+The **Wildfire Readiness Assistant** is a machine learning tool designed to help communities assess their preparedness for wildfire events. This project addresses public safety issues by providing **data-driven readiness assessments** that help individuals and communities understand whether conditions may require increased awareness or preparation. The tool supports informed decision-making and **does not replace official emergency directions**.
 
 ---
 
-## 🎯 Why This Exists
-Wildfire information is often scattered across:
+## ❓ Why this exists?
 
-🗺️ fire maps • 🌬️ weather forecasts • 📢 alerts • 📰 news updates  
+Wildfire information is often scattered across maps, forecasts, and alerts, making it hard for residents to know how prepared they should be in the critical hours before guidance becomes clear.
 
-That can make it difficult for residents to answer the most practical question:
+The **Wildfire Readiness Assistant** synthesizes public wildfire and weather signals into a simple readiness level:
 
-> **“How prepared should I be right now?”**
+- 🟢 **Low**
+- 🟡 **Moderate**
+- 🔴 **High**
 
-This project closes that **readiness gap** by synthesizing public wildfire + weather signals into one calm, actionable output.
-
----
-
-## 👥 Who Benefits
-This tool is designed for **wildfire-prone residents**, especially households managing:
-
-👶 children • 👵 seniors • 🐶 pets • 🚗 travel/packing time
+It also provides actionable next steps.  
+This tool is **advisory-only** and designed to **complement—not replace—official emergency alerts and evacuation orders**.
 
 ---
 
-## 🧭 Pilot Region & Scope
-### ✅ Santa Cruz Pilot (2020–2022 Fire Seasons)
-The initial implementation begins as a **Santa Cruz pilot**, covering **three fire seasons (2020–2022)**  
-📅 Fire season window: **June 1 – October 31**
+## 🧭 Pilot Region and Scope
 
-Santa Cruz was chosen because it represents a high-risk area with documented wildfire activity, enabling structured testing using historical fire + weather conditions.
+The implementation begins as a **Santa Cruz pilot** covering **three fire seasons (2020–2022)**, each running **June 1 – October 31**.
 
-📌 The multi-year approach provides approximately **459 training days** and supports cross-year validation.
+Santa Cruz was selected as the pilot region because it represents a high-risk area with documented fire activity, enabling structured testing of the modeling approach using historical fire and weather conditions. The multi-year approach provides ~459 days of training data and enables cross-year validation.
+
+The model was later expanded using tiled data across California for all three years (2020–2022). Results and thresholds from the Santa Cruz pilot should not be assumed to generalize outside California without additional calibration and testing.
 
 ---
 
 ## 🧠 How the Model Works
-The model combines historical wildfire perimeters and daily weather conditions using **5 key inputs**:
 
-- 🌡️ Maximum daily temperature (**TMAX**)  
-- 💨 Wind speed (**AWND**)  
-- 🌧️ Precipitation (**PRCP**)  
-- 🌵 Evapotranspiration / dryness (**EVAP**)  
-- 📍 Distance to nearest historical fire perimeter (**DISTANCE_TO_FIRE_KM**)  
+The model is trained on combined historical fire perimeter data and daily weather conditions to assess wildfire readiness risk. It uses five key inputs:
 
-The system uses a **Logistic Regression model** to output a probability score representing whether readiness should be elevated.
+- 🌡️ Maximum daily temperature  
+- 💨 Wind speed  
+- 🌧️ Precipitation  
+- 🌵 Evapotranspiration (a measure of dryness)  
+- 📍 Distance to the nearest historical fire perimeter  
+
+Using a logistic regression model trained on 2020–2022 California fire season data, the tool outputs a probability indicating whether readiness should be elevated.
 
 ---
 
-## 🚦 Readiness Levels (Output)
-The model maps probability into **3 readiness states**:
+## 🚦 Readiness Levels
 
-🟢 **Low (p < 0.25)**  
-Normal activity • Stay informed  
+The model categorizes days into three readiness levels based on probability thresholds:
 
-🟡 **Moderate (0.25 ≤ p < 0.45)**  
-Pack a go-bag • Review evacuation routes  
-
-🔴 **High (p ≥ 0.45)**  
-Prepare to evacuate **if advised by officials**  
-*(This is not an evacuation order.)*
+- 🟢 **Low (p < 0.25):** Normal activity; stay informed  
+- 🟡 **Moderate (0.25 ≤ p < 0.45):** Pack go-bag; review evacuation routes  
+- 🔴 **High (p ≥ 0.45):** Prepare to evacuate if advised by officials  
 
 ---
 
 ## 📊 Evaluation Philosophy
-This project prioritizes **Recall** as the primary metric.
 
-✅ **Why recall matters:**  
-In wildfire readiness, a **false negative** (missing a dangerous day) is more costly than a **false positive** (a cautious readiness warning).
+**Recall** is the primary evaluation metric for this model.
 
-📌 Secondary metrics:  
-- **Accuracy** can be misleading due to class imbalance  
-- **ROC-AUC** helps compare ranking quality, but recall best reflects safety goals  
+In the context of wildfire readiness:
+- A **false negative** (failing to flag a day that is actually elevated risk) is far more costly than  
+- A **false positive** (raising an alert when conditions are less dangerous)
 
----
+Missing a dangerous day could leave people unprepared when they should be taking readiness actions.
 
-## 🛡️ Responsible Use & Limitations
-This tool supports **readiness and situational awareness** — it does **not**:
-
-- ❌ issue evacuation orders  
-- ❌ replace CAL FIRE, county alerts, NWS warnings, or emergency instructions  
-- ❌ predict wildfire ignition or fire spread in real time  
-
-### 🔒 Pilot Validation Limits
-The model has been **pilot-tested** for the **Santa Cruz region (2020–2022)** and has not been fully validated for other regions.
-
-📢 Users should always follow official guidance from:
-- CAL FIRE  
-- County emergency management offices  
-- National Weather Service  
+Accuracy and ROC-AUC are secondary metrics:
+- **Accuracy** can be misleading when most days are low-risk (class imbalance)
+- **ROC-AUC** helps compare model ranking quality  
+- **Recall** directly verifies whether we catch dangerous days
 
 ---
 
-## 🗺️ Statewide California Coverage (Tiled Framework)
-The Santa Cruz pilot approach was expanded to statewide California coverage using a **16-tile bounding box framework**:
+## 🛡️ Responsible Use and Limitations
 
-🧩 **16 regions × 3 years = 48 tile-year combinations**  
-📆 ~**7,344 daily observations**
+This tool is designed to support readiness and situational awareness. It does not issue evacuation orders, replace official emergency directives, or make real-time predictions.
 
-Each tile is processed independently to:
-- respect API rate limits  
-- enable region-aware evaluation  
-- identify tiles that need calibration or retraining  
+The model has been **pilot-tested** for the Santa Cruz region across three fire seasons (2020–2022). It has not been fully validated for other regions or for use outside California.
+
+Users should always follow official directives from **CAL FIRE**, county emergency management, and the **National Weather Service**. This tool provides supplementary readiness guidance only.
+
+---
+
+## 🗺️ Statewide California Coverage
+
+The Santa Cruz pilot approach was expanded to statewide California coverage by dividing the state into tiled bounding boxes with 16 regions, processed across all three fire seasons (2020–2022).
+
+This yields:
+- **48 tile-year combinations**
+- approximately **7,344 daily observations**
+
+Each tile is processed independently to collect fire perimeter and weather data, then combined into a unified training dataset.
+
+This tiled approach:
+- respects API rate limits  
+- enables region-aware evaluation  
+- allows for per-tile performance assessment to identify areas where the model may need additional calibration  
 
 ---
 
 ## 🧪 How to Run the Notebook
-### 1) Install dependencies
-```bash
-pip install -r requirements.txt
+
+1. Install dependencies:  
+   ```bash
+   pip install -r requirements.txt
